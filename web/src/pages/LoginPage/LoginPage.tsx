@@ -10,7 +10,7 @@ import {
   FieldError,
 } from '@redwoodjs/forms'
 import { Link, navigate, routes } from '@redwoodjs/router'
-import { Metadata } from '@redwoodjs/web'
+import { MetaTags } from '@redwoodjs/web'
 import { toast, Toaster } from '@redwoodjs/web/toast'
 
 import { useAuth } from 'src/auth'
@@ -24,16 +24,13 @@ const LoginPage = () => {
     }
   }, [isAuthenticated])
 
-  const usernameRef = useRef<HTMLInputElement>(null)
+  const usernameRef = useRef()
   useEffect(() => {
-    usernameRef.current?.focus()
+    usernameRef.current.focus()
   }, [])
 
-  const onSubmit = async (data: Record<string, string>) => {
-    const response = await logIn({
-      username: data.username,
-      password: data.password,
-    })
+  const onSubmit = async (data) => {
+    const response = await logIn({ ...data })
 
     if (response.message) {
       toast(response.message)
@@ -46,9 +43,9 @@ const LoginPage = () => {
 
   return (
     <>
-      <Metadata title="Login" />
+      <MetaTags title="Login" />
 
-      <main className="rw-main">
+      <main className="rw-main mx-auto mt-12 w-96">
         <Toaster toastOptions={{ className: 'rw-toast', duration: 6000 }} />
         <div className="rw-scaffold rw-login-container">
           <div className="rw-segment">
@@ -104,7 +101,7 @@ const LoginPage = () => {
                   <div className="rw-forgot-link">
                     <Link
                       to={routes.forgotPassword()}
-                      className="rw-forgot-link"
+                      className="rw-forgot-link underline"
                     >
                       Forgot Password?
                     </Link>
@@ -119,7 +116,7 @@ const LoginPage = () => {
               </div>
             </div>
           </div>
-          <div className="rw-login-link">
+          <div className="rw-login-link mt-2 text-center">
             <span>Don&apos;t have an account?</span>{' '}
             <Link to={routes.signup()} className="rw-link">
               Sign up!

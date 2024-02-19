@@ -10,7 +10,7 @@ import {
   Submit,
 } from '@redwoodjs/forms'
 import { Link, navigate, routes } from '@redwoodjs/router'
-import { Metadata } from '@redwoodjs/web'
+import { MetaTags } from '@redwoodjs/web'
 import { toast, Toaster } from '@redwoodjs/web/toast'
 
 import { useAuth } from 'src/auth'
@@ -24,17 +24,14 @@ const SignupPage = () => {
     }
   }, [isAuthenticated])
 
-  // focus on username box on page load
-  const usernameRef = useRef<HTMLInputElement>(null)
+  // focus on email box on page load
+  const usernameRef = useRef()
   useEffect(() => {
-    usernameRef.current?.focus()
+    usernameRef.current.focus()
   }, [])
 
-  const onSubmit = async (data: Record<string, string>) => {
-    const response = await signUp({
-      username: data.username,
-      password: data.password,
-    })
+  const onSubmit = async (data) => {
+    const response = await signUp({ ...data })
 
     if (response.message) {
       toast(response.message)
@@ -48,9 +45,9 @@ const SignupPage = () => {
 
   return (
     <>
-      <Metadata title="Signup" />
+      <MetaTags title="Signup" />
 
-      <main className="rw-main">
+      <main className="rw-main mx-auto mt-12 w-96">
         <Toaster toastOptions={{ className: 'rw-toast', duration: 6000 }} />
         <div className="rw-scaffold rw-login-container">
           <div className="rw-segment">
@@ -80,6 +77,7 @@ const SignupPage = () => {
                       },
                     }}
                   />
+
                   <FieldError name="username" className="rw-field-error" />
 
                   <Label
@@ -101,6 +99,7 @@ const SignupPage = () => {
                       },
                     }}
                   />
+
                   <FieldError name="password" className="rw-field-error" />
 
                   <div className="rw-button-group">
@@ -112,7 +111,7 @@ const SignupPage = () => {
               </div>
             </div>
           </div>
-          <div className="rw-login-link">
+          <div className="rw-login-link mt-2 text-center">
             <span>Already have an account?</span>{' '}
             <Link to={routes.login()} className="rw-link">
               Log in!

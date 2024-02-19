@@ -2,7 +2,7 @@ import { useEffect, useRef } from 'react'
 
 import { Form, Label, TextField, Submit, FieldError } from '@redwoodjs/forms'
 import { navigate, routes } from '@redwoodjs/router'
-import { Metadata } from '@redwoodjs/web'
+import { MetaTags } from '@redwoodjs/web'
 import { toast, Toaster } from '@redwoodjs/web/toast'
 
 import { useAuth } from 'src/auth'
@@ -16,12 +16,12 @@ const ForgotPasswordPage = () => {
     }
   }, [isAuthenticated])
 
-  const usernameRef = useRef<HTMLInputElement>(null)
+  const usernameRef = useRef()
   useEffect(() => {
-    usernameRef?.current?.focus()
+    usernameRef.current.focus()
   }, [])
 
-  const onSubmit = async (data: { username: string }) => {
+  const onSubmit = async (data) => {
     const response = await forgotPassword(data.username)
 
     if (response.error) {
@@ -39,9 +39,9 @@ const ForgotPasswordPage = () => {
 
   return (
     <>
-      <Metadata title="Forgot Password" />
+      <MetaTags title="Forgot Password" />
 
-      <main className="rw-main">
+      <main className="rw-main mx-auto mt-12 w-96">
         <Toaster toastOptions={{ className: 'rw-toast', duration: 6000 }} />
         <div className="rw-scaffold rw-login-container">
           <div className="rw-segment">
@@ -68,10 +68,7 @@ const ForgotPasswordPage = () => {
                       errorClassName="rw-input rw-input-error"
                       ref={usernameRef}
                       validation={{
-                        required: {
-                          value: true,
-                          message: 'Username is required',
-                        },
+                        required: true,
                       }}
                     />
 

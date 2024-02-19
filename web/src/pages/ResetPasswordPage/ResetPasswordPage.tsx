@@ -8,12 +8,12 @@ import {
   FieldError,
 } from '@redwoodjs/forms'
 import { navigate, routes } from '@redwoodjs/router'
-import { Metadata } from '@redwoodjs/web'
+import { MetaTags } from '@redwoodjs/web'
 import { toast, Toaster } from '@redwoodjs/web/toast'
 
 import { useAuth } from 'src/auth'
 
-const ResetPasswordPage = ({ resetToken }: { resetToken: string }) => {
+const ResetPasswordPage = ({ resetToken }) => {
   const { isAuthenticated, reauthenticate, validateResetToken, resetPassword } =
     useAuth()
   const [enabled, setEnabled] = useState(true)
@@ -35,14 +35,14 @@ const ResetPasswordPage = ({ resetToken }: { resetToken: string }) => {
       }
     }
     validateToken()
-  }, [resetToken, validateResetToken])
-
-  const passwordRef = useRef<HTMLInputElement>(null)
-  useEffect(() => {
-    passwordRef.current?.focus()
   }, [])
 
-  const onSubmit = async (data: Record<string, string>) => {
+  const passwordRef = useRef()
+  useEffect(() => {
+    passwordRef.current.focus()
+  }, [])
+
+  const onSubmit = async (data) => {
     const response = await resetPassword({
       resetToken,
       password: data.password,
@@ -59,7 +59,7 @@ const ResetPasswordPage = ({ resetToken }: { resetToken: string }) => {
 
   return (
     <>
-      <Metadata title="Reset Password" />
+      <MetaTags title="Reset Password" />
 
       <main className="rw-main">
         <Toaster toastOptions={{ className: 'rw-toast', duration: 6000 }} />
@@ -92,7 +92,7 @@ const ResetPasswordPage = ({ resetToken }: { resetToken: string }) => {
                       validation={{
                         required: {
                           value: true,
-                          message: 'New Password is required',
+                          message: 'Password is required',
                         },
                       }}
                     />
