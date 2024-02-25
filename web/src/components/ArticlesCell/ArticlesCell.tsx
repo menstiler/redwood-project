@@ -1,6 +1,5 @@
 import type { ArticlesQuery } from 'types/graphql'
 
-import { Link, routes } from '@redwoodjs/router'
 import type { CellSuccessProps, CellFailureProps } from '@redwoodjs/web'
 
 import Article from 'src/components/Article'
@@ -12,6 +11,9 @@ export const QUERY = gql`
       title
       body
       createdAt
+      user {
+        name
+      }
     }
   }
 `
