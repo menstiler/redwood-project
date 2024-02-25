@@ -1,8 +1,4 @@
-import type { Prisma, Comment } from '@prisma/client'
-
-import type { ScenarioData } from '@redwoodjs/testing/api'
-
-export const standard = defineScenario<Prisma.CommentCreateArgs>({
+export const standard = defineScenario({
   comment: {
     jane: {
       data: {
@@ -12,6 +8,13 @@ export const standard = defineScenario<Prisma.CommentCreateArgs>({
           create: {
             title: 'Redwood Leaves',
             body: 'The quick brown fox jumped over the lazy dog.',
+            user: {
+              create: {
+                email: 'john.doe@example.com',
+                hashedPassword: 'String',
+                salt: 'String',
+              },
+            },
           },
         },
       },
@@ -24,6 +27,13 @@ export const standard = defineScenario<Prisma.CommentCreateArgs>({
           create: {
             title: 'Root Systems',
             body: 'The five boxing wizards jump quickly.',
+            user: {
+              create: {
+                email: 'jane.doe@example.com',
+                hashedPassword: 'String',
+                salt: 'String',
+              },
+            },
           },
         },
       },
@@ -31,16 +41,20 @@ export const standard = defineScenario<Prisma.CommentCreateArgs>({
   },
 })
 
-export const postOnly = defineScenario<Prisma.PostCreateArgs>({
+export const postOnly = defineScenario({
   post: {
     bark: {
       data: {
         title: 'Bark',
         body: "A tree's bark is worse than its bite",
+        user: {
+          create: {
+            email: 'jane.doe@example.com',
+            hashedPassword: 'String',
+            salt: 'String',
+          },
+        },
       },
     },
   },
 })
-
-export type StandardScenario = ScenarioData<Comment, 'comment'>
-export type PostOnlyScenario = typeof postOnly
