@@ -17,7 +17,7 @@ const Article = ({ article, summary = false }: Props) => {
   return (
     <article>
       <header>
-        <h2 className="text-xl font-semibold text-blue-700">
+        <h2 className="text-xl font-semibold">
           <Link to={routes.article({ id: article.id })}>{article.title}</Link>
           <span className="ml-2 font-normal text-gray-400">
             by {article.user.name}

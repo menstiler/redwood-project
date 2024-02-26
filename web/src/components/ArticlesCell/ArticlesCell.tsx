@@ -1,8 +1,11 @@
+import { useContext } from 'react'
+
 import type { ArticlesQuery } from 'types/graphql'
 
 import type { CellSuccessProps, CellFailureProps } from '@redwoodjs/web'
 
 import Article from 'src/components/Article'
+import { SearchContext } from 'src/layouts/BlogLayout'
 
 export const QUERY = gql`
   query ArticlesQuery {
@@ -27,11 +30,24 @@ export const Failure = ({ error }: CellFailureProps) => (
 )
 
 export const Success = ({ articles }: CellSuccessProps<ArticlesQuery>) => {
+  const searchResult = useContext(SearchContext)
+
   return (
     <div className="space-y-10">
-      {articles.map((article) => (
-        <Article article={article} key={article.id} summary={true} />
-      ))}
+      {searchResult
+        ? articles.map((article) => {
+            if (
+              article.title.toLowerCase().includes(searchResult) ||
+              article.user.name.toLowerCase().includes(searchResult)
+            ) {
+              return (
+                <Article article={article} key={article.id} summary={true} />
+              )
+            }
+          })
+        : articles.map((article) => (
+            <Article article={article} key={article.id} summary={true} />
+          ))}
     </div>
   )
 }

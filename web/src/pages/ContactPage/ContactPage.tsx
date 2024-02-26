@@ -36,7 +36,7 @@ const ContactPage = () => {
   }
 
   return (
-    <>
+    <div className="mx-auto w-96">
       <MetaTags title="Contact" description="Contact page" />
 
       <Toaster />
@@ -62,7 +62,7 @@ const ContactPage = () => {
         <TextField
           name="name"
           validation={{ required: true }}
-          className="rounded-sm border px-2 py-1 outline-none"
+          className="w-full rounded-sm border px-2 py-1 outline-none"
           errorClassName="border rounded-sm px-2 py-1 border-red-700 outline-none"
         />
         <FieldError name="name" className="block text-red-700" />
@@ -83,7 +83,7 @@ const ContactPage = () => {
               message: 'Please enter a valid email address',
             },
           }}
-          className="rounded-sm border px-2 py-1"
+          className="w-full rounded-sm border px-2 py-1"
           errorClassName="border rounded-sm px-2 py-1 border-red-700 outline-none"
         />
         <FieldError name="email" className="block text-red-700" />
@@ -98,7 +98,7 @@ const ContactPage = () => {
         <TextAreaField
           name="message"
           validation={{ required: true }}
-          className="block rounded-sm border px-2 py-1"
+          className="block w-full rounded-sm border px-2 py-1"
           errorClassName="block border rounded-sm px-2 py-1 border-red-700 outline-none"
         />
         <FieldError name="message" className="block text-red-700" />
@@ -110,7 +110,7 @@ const ContactPage = () => {
           Save
         </Submit>
       </Form>
-    </>
+    </div>
   )
 }
 
